@@ -1,0 +1,268 @@
+﻿@page "/settlements";
+@using SettlementManager.Contract
+@using SettlementManager.Messaging.Request
+@using SettlementManager.Messaging.View
+@using SettlementManager.Model
+@inject ISettlementService _settlementService;
+
+<h3>Settlements</h3>
+@if (Loading)
+{
+   <div class="d-flex justify-content-center">
+      <div class="spinner-border" role="status">
+      </div>
+   </div>
+}
+else{
+    <nav>
+      <ul class="pagination">
+        <li class="page-item">
+          <a class="page-link"  @onclick="DecrementPage" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>
+        @foreach(var pg in NearPages)
+        {
+            <li class="page-item"><a class="page-link" @onclick="() => SelectPage(pg)">@pg</a></li>
+        }
+        <li class="page-item">
+          <a class="page-link" @onclick="IncrementPage" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+              <th scope="col">Id</th>
+              <th scope="col">Name</th>
+              <th scope="col">Postal Code</th>
+              <th scope="col">Country</th>
+              <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var settlement in PagedSettlements)
+            {
+               <tr>
+                  <th scope="row">@settlement.Id</th>
+                  <td>@settlement.Name</td>
+                  <td>@settlement.PostalCode</td>
+                  <td>@settlement.Country?.Name</td>
+                  <td>
+                      <button class="btn" @onclick="CreateSettlementModal"><i class="fa-solid fa-square-plus"></i></button>
+                      <button class="btn" @onclick="() => UpdateSettlementModal(settlement)"><i class="fa-solid fa-pencil"></i></button>
+                      <button class="btn" @onclick="() => DeleteSettlementModal(settlement)"><i class="fa-solid fa-trash-can"></i></button>
+                      @*<button class="btn" @onclick="CreateSettlement"><i class="fa-solid fa-square-plus"></i></button>
+                      <button class="btn" @onclick="() => UpdateSettlement(settlement)"><i class="fa-solid fa-pencil"></i></button>
+                      <button class="btn" @onclick="() => DeleteSettlement(settlement)"><i class="fa-solid fa-trash-can"></i></button>*@
+                  </td>
+               </tr> 
+            }
+        </tbody>
+    </table>
+
+
+    @if (ShowErrorModal)
+    {
+        
+    }
+
+    @if (ShowCreateSettlementModal)
+    {
+        <div class="modal" tabindex="-1">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Create Settlement</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <p>Modal body text goes here.</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" @onclick="CreateSettlement">Save changes</button>
+              </div>
+            </div>
+          </div>
+        </div>
+    }
+
+    @if (ShowUpdateSettlementModal)
+    {
+        <div class="modal" tabindex="-1">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Modal title</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <p>Modal body text goes here.</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+              </div>
+            </div>
+          </div>
+        </div>
+    }
+
+    @if (ShowDeleteSettlementModal)
+    {
+        <div class="modal" tabindex="-1">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Modal title</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <p>Modal body text goes here.</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+              </div>
+            </div>
+          </div>
+        </div>
+    }
+}
+
+@code {
+    private int PageNumber { get; set; } = 1;
+    private int PageSize { get; set; } = 10;
+    private IEnumerable<int> NearPages { get; set; }
+
+    private IEnumerable<SettlementView> PagedSettlements { get; set; }
+    private long TotalItems { get; set; }
+    private SettlementView SelectedSettlement { get; set; }
+
+
+    private bool ShowErrorModal { get; set; }
+    private bool ShowCreateSettlementModal { get; set; }
+    private bool ShowUpdateSettlementModal { get; set; }
+    private bool ShowDeleteSettlementModal { get; set; }
+
+    private bool Loading = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        NearPages = new List<int>() { 1, 2, 3};
+        await InitializeSettlements();
+
+        Loading = false;
+    }
+
+    public async Task InitializeSettlements()
+    {
+        var response = await _settlementService.GetSettlementQueryAsync(
+           new GetSettlementsQueryRequest{
+                Query = new GetSettlementQueryRequestView
+                {
+                    PageNumber = PageNumber,
+                    PageSize = PageSize,
+                }
+            });
+
+        PagedSettlements = response.Query.Settlements;
+        TotalItems = response.Query.TotalItems;
+    }
+
+    #region Paging Methods
+
+    private async Task IncrementPage()
+    {
+        var maxPage = TotalItems / PageSize + 1;
+        if(PageNumber + 1 <= maxPage)
+        {
+            PageNumber += 1;
+            UpdateNearPageList();
+            await InitializeSettlements();
+        }
+    }
+
+    private async Task DecrementPage()
+    {
+        if(PageNumber -1 >= 1)
+        {
+            PageNumber -= 1;
+            UpdateNearPageList();
+            await InitializeSettlements();
+        }
+    }
+
+    private async Task SelectPage(int pageNumber)
+    {
+        PageNumber = pageNumber;
+        UpdateNearPageList();
+        await InitializeSettlements();
+    }
+
+    private void UpdateNearPageList()
+    {
+        NearPages = new List<int>() { PageNumber - 1, PageNumber, PageNumber + 1 };
+    }
+
+    #endregion
+
+    #region Action Methods
+
+    private void CreateSettlementModal()
+    {
+        ShowCreateSettlementModal = true;
+    }
+
+    private async Task CreateSettlement()
+    {
+        await _settlementService.CreateSettlementAsync(
+        new CreateSettlementRequest
+            {
+                Settlement = new CreateSettlementView
+                {
+                    Name = SelectedSettlement.Name,
+                    PostalCode = SelectedSettlement.PostalCode,
+                    CountryId = SelectedSettlement.Country.Id,
+                }
+            });
+    }
+
+    private void UpdateSettlementModal(SettlementView settlement)
+    {
+        SelectedSettlement = settlement;
+        ShowUpdateSettlementModal = true;
+    }
+
+    private async Task UpdateSettlement()
+    {
+        await _settlementService.UpdateSettlementAsync(
+        new UpdateSettlementRequest
+            {
+                Settlement = new UpdateSettlementView
+                {
+                    Id = SelectedSettlement.Id,
+                    Name = SelectedSettlement.Name,
+                    PostalCode = SelectedSettlement.PostalCode,
+                    CountryId = SelectedSettlement.Country.Id,
+                }
+            });
+    }
+
+    private void DeleteSettlementModal(SettlementView settlement)
+    {
+        SelectedSettlement = settlement;
+        ShowDeleteSettlementModal = true;
+    }
+
+    private async Task DeleteSettlement()
+    {
+        throw new NotImplementedException();
+        await Task.FromResult(true);
+    }
+
+    #endregion
+}

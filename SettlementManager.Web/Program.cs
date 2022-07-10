@@ -1,8 +1,8 @@
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
+using SettlementManager.API;
 using SettlementManager.Web.Data;
 
 var builder = WebApplication.CreateBuilder(args);
+DiContainer.Configure(builder);	
 
 // Add services to the container.
 builder.Services.AddRazorPages();
