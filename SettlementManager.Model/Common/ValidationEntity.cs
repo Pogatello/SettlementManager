@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using SettlementManager.Infrastructure.Exceptions;
+using SettlementManager.Infrastructure.Extenstions;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SettlementManager.Model.Common
 {

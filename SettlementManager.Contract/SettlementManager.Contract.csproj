@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\SettlementManager.Messaging\SettlementManager.Messaging.csproj" />
+  </ItemGroup>
+
 </Project>

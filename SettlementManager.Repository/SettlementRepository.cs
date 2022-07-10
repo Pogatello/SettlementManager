@@ -21,12 +21,12 @@ namespace SettlementManager.Repository
 
 		#region ISettlementReposiotry
 
-		public Task CreateSettlementAsync(Settlement settlement)
+		public Task<IEnumerable<Settlement>> GetSettlementsQueryAsync(SettlementQuery query)
 		{
 			throw new NotImplementedException();
 		}
 
-		public Task<IEnumerable<Settlement>> GetSettlementsQueryAsync(SettlementQuery query)
+		public Task CreateSettlementAsync(Settlement settlement)
 		{
 			throw new NotImplementedException();
 		}

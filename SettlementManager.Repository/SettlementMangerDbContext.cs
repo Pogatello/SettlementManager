@@ -9,6 +9,8 @@ namespace SettlementManager.Repository
 
 		public virtual DbSet<Settlement> Settlements { get; set; }
 
+		public virtual DbSet<Country> Countries { get; set; }
+
 		#endregion
 
 		#region Constructors
