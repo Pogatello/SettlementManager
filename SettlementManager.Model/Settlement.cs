@@ -1,5 +1,4 @@
 ﻿using SettlementManager.Model.Common;
-using System.ComponentModel.DataAnnotations;
 
 namespace SettlementManager.Model
 {
@@ -57,6 +56,11 @@ namespace SettlementManager.Model
 			}
 
 			ValidateForCreate();
+		}
+
+		public void SetCountry(Country country)
+		{
+			Country = country;
 		}
 
 		#endregion

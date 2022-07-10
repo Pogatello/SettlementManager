@@ -8,7 +8,6 @@ namespace SettlementManager.Service
 {
 	public class SettlementService : ISettlementService
 	{
-
 		#region Fiels
 
 		private readonly ISettlementRepository _settlementRepository;

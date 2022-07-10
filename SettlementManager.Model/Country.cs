@@ -9,7 +9,7 @@ namespace SettlementManager.Model
 		[Key]
 		public long Id { get; private set; }
 
-		public long Name { get; private set; }
+		public string Name { get; private set; }
 
 		#endregion
 	}
