@@ -17,6 +17,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SettlementManager.Model", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SettlementManager.Web", "SettlementManager.Web\SettlementManager.Web.csproj", "{C80D16A9-C247-4AB2-A341-A16A107D0106}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SettlementManager.Infrastructure", "SettlementManager.Infrastructure\SettlementManager.Infrastructure.csproj", "{4CC48881-8639-4748-AED7-C95C341CF701}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{AA3B89DD-9843-4E05-8971-5D23E8AF710D}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +58,10 @@ Global
 		{C80D16A9-C247-4AB2-A341-A16A107D0106}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C80D16A9-C247-4AB2-A341-A16A107D0106}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C80D16A9-C247-4AB2-A341-A16A107D0106}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4CC48881-8639-4748-AED7-C95C341CF701}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4CC48881-8639-4748-AED7-C95C341CF701}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4CC48881-8639-4748-AED7-C95C341CF701}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4CC48881-8639-4748-AED7-C95C341CF701}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
