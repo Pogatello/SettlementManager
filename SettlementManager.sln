@@ -3,21 +3,21 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32210.238
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SettlementManager.API", "SettlementManager.API\SettlementManager.API.csproj", "{2CAAF2A4-EF85-4BC3-A3AB-29885CC8EBDC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SettlementManager.API", "SettlementManager.API\SettlementManager.API.csproj", "{2CAAF2A4-EF85-4BC3-A3AB-29885CC8EBDC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SettlementManager.Repository", "SettlementManager.Repository\SettlementManager.Repository.csproj", "{5B4D175B-98F5-410E-A6A6-7C46FDAA084B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SettlementManager.Repository", "SettlementManager.Repository\SettlementManager.Repository.csproj", "{5B4D175B-98F5-410E-A6A6-7C46FDAA084B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SettlementManager.Service", "SettlementManager.Service\SettlementManager.Service.csproj", "{AB1D0088-8DF8-498A-9002-ACFB152DEFD1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SettlementManager.Service", "SettlementManager.Service\SettlementManager.Service.csproj", "{AB1D0088-8DF8-498A-9002-ACFB152DEFD1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SettlementManager.Contract", "SettlementManager.Contract\SettlementManager.Contract.csproj", "{20DFF5CD-C8AF-4B03-9917-C937E87EEE18}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SettlementManager.Contract", "SettlementManager.Contract\SettlementManager.Contract.csproj", "{20DFF5CD-C8AF-4B03-9917-C937E87EEE18}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SettlementManager.Messaging", "SettlementManager.Messaging\SettlementManager.Messaging.csproj", "{F64E4082-E5D6-4CA1-9A3A-8A1CBD1186D2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SettlementManager.Messaging", "SettlementManager.Messaging\SettlementManager.Messaging.csproj", "{F64E4082-E5D6-4CA1-9A3A-8A1CBD1186D2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SettlementManager.Model", "SettlementManager.Model\SettlementManager.Model.csproj", "{F59E4954-5758-4E83-91B6-8670B807DE90}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SettlementManager.Model", "SettlementManager.Model\SettlementManager.Model.csproj", "{F59E4954-5758-4E83-91B6-8670B807DE90}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SettlementManager.Web", "SettlementManager.Web\SettlementManager.Web.csproj", "{C80D16A9-C247-4AB2-A341-A16A107D0106}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SettlementManager.Web", "SettlementManager.Web\SettlementManager.Web.csproj", "{C80D16A9-C247-4AB2-A341-A16A107D0106}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SettlementManager.Infrastructure", "SettlementManager.Infrastructure\SettlementManager.Infrastructure.csproj", "{4CC48881-8639-4748-AED7-C95C341CF701}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SettlementManager.Infrastructure", "SettlementManager.Infrastructure\SettlementManager.Infrastructure.csproj", "{4CC48881-8639-4748-AED7-C95C341CF701}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{AA3B89DD-9843-4E05-8971-5D23E8AF710D}"
 	ProjectSection(SolutionItems) = preProject

@@ -11,7 +11,7 @@
     <div class="modal-dialog" role="document">  
         <div class="modal-content">  
             <div class="modal-header">  
-                <h5 class="modal-title" id="titleLabel">Create Settlement</h5>  
+                <h5 class="modal-title" id="titleLabel">Update Settlement</h5>  
                 <button type="button" class="close"  data-dismiss="modal" @onclick="Close" aria-label="Close">  
                     <span aria-hidden="true">×</span>  
                 </button>  
@@ -26,32 +26,32 @@
                 }
                 else
                 {
-                     <EditForm Model="@NewSettlement" OnValidSubmit="@CreateSettlement">  
+                     <EditForm Model="@UpdateSettlement" OnValidSubmit="@UpdateSettlementAsync">  
                     <DataAnnotationsValidator />  
                     <div class="form-group">  
                         <label for="name">Name: </label>  
-                        <InputText id="name" class="form-control" @bind-Value="@NewSettlement.Name" placeholder="Enter name"></InputText>  
-                        <ValidationMessage For="@(() => NewSettlement.Name)" />  
+                        <InputText id="name" class="form-control" @bind-Value="@UpdateSettlement.Name" placeholder="Enter name"></InputText>  
+                        <ValidationMessage For="@(() => UpdateSettlement.Name)" />  
                     </div>  
                     <br />
                     <div class="form-group">  
                         <label for="psotalCode">Postal Code: </label>  
-                        <InputText id="psotalCode" class="form-control" @bind-Value="@NewSettlement.PostalCode" placeholder="Enter postal code"></InputText>  
-                        <ValidationMessage For="@(() => NewSettlement.PostalCode)" />  
+                        <InputText id="psotalCode" class="form-control" @bind-Value="@UpdateSettlement.PostalCode" placeholder="Enter postal code"></InputText>  
+                        <ValidationMessage For="@(() => UpdateSettlement.PostalCode)" />  
                     </div> 
                     <br />
                     <div class="form-group">  
                         <label for="psotalCode">Country: </label>  
-                        <InputSelect @bind-Value=@NewSettlement.CountryId>
+                        <InputSelect @bind-Value=@UpdateSettlement.CountryId>
                             @foreach (var display in Countries)
                             {
                                 <option value=@display.Id>@display.Name</option>
                             }
                         </InputSelect> 
-                        <ValidationMessage For="@(() => NewSettlement.CountryId)" />  
+                        <ValidationMessage For="@(() => UpdateSettlement.CountryId)" />  
                     </div>
                     <br>                   
-                    <button type="submit" class="btn btn-primary">Create Settlement</button>  
+                    <button type="submit" class="btn btn-primary">Update Settlement</button>  
                     <a class="btn btn-outline-primary" @onclick="@Close">Close</a>  
                 </EditForm>  
                 }
@@ -65,11 +65,14 @@
     private Settlements _Parent { get; set; }
 
     [Parameter]
-    public bool ShowCreateSettlementModal { get; set; }
+    public bool ShowUpdateSettlementModal { get; set; }
     [Parameter]
-    public EventCallback<bool> ShowCreateSettlementModalChanged { get; set; }
+    public EventCallback<bool> ShowUpdateSettlementModalChanged { get; set; }
 
-    private CreateSettlementView NewSettlement { get; set; }
+    [Parameter]
+    public SettlementView SelectedSettlement { get; set; }
+
+    private UpdateSettlementView UpdateSettlement { get; set; } = new UpdateSettlementView();
     private IEnumerable<CountryView> Countries { get; set; }
 
     private bool Loading { get; set; } = true;
@@ -77,7 +80,13 @@
 
     protected override async Task OnInitializedAsync()
     {
-        NewSettlement = new CreateSettlementView();
+        UpdateSettlement = new UpdateSettlementView
+        {
+            Id = SelectedSettlement.Id,
+            Name = SelectedSettlement.Name,
+            PostalCode = SelectedSettlement.PostalCode,
+            CountryId = SelectedSettlement.Country.Id
+        };
 
         var response = await _countryService.GetCountriesAsync(new GetCountriesRequest());
         Countries = response.Countries;
@@ -85,23 +94,23 @@
         Loading = false;
     }
 
-    private async Task CreateSettlement()
+    private async Task UpdateSettlementAsync()
     {
-        await _settlementService.CreateSettlementAsync(
-            new CreateSettlementRequest
+        await _settlementService.UpdateSettlementAsync(
+            new UpdateSettlementRequest
                 {
-                    Settlement = NewSettlement
+                    Settlement = UpdateSettlement
                 }
         );
 
-        ShowCreateSettlementModal = false;
-        await ShowCreateSettlementModalChanged.InvokeAsync(ShowCreateSettlementModal);
+        ShowUpdateSettlementModal = false;
+        await ShowUpdateSettlementModalChanged.InvokeAsync(ShowUpdateSettlementModal);
         await _Parent.InitializeSettlements();
     }
 
     private Task Close()
     {
-        ShowCreateSettlementModal = false;
-        return ShowCreateSettlementModalChanged.InvokeAsync(ShowCreateSettlementModal);
+        ShowUpdateSettlementModal = false;
+        return ShowUpdateSettlementModalChanged.InvokeAsync(ShowUpdateSettlementModal);
     }
 }

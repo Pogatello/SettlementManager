@@ -3,6 +3,7 @@
 @using SettlementManager.Messaging.Request
 @using SettlementManager.Messaging.View
 @using SettlementManager.Model
+@using SettlementManager.Web.Components
 @inject ISettlementService _settlementService;
 
 <h3>Settlements</h3>
@@ -75,49 +76,16 @@ else{
 
     @if (ShowCreateSettlementModal)
     {
-        	   @* <CascadingValue Value="this">
-            <CascadingValue Value="@ShowCreateSettlementModal">
-                 <CreateSettlementModalComponent></CreateSettlementModalComponent>
-            </CascadingValue>
-        </CascadingValue>*@
-        <div class="modal" tabindex="-1">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title">Create Settlement</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <div class="modal-body">
-                <p>Modal body text goes here.</p>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" @onclick="CreateSettlement">Save changes</button>
-              </div>
-            </div>
-          </div>
-        </div>
+         <CascadingValue Value="this">
+                 <CreateSettlementModalComponent @bind-ShowCreateSettlementModal="@ShowCreateSettlementModal"></CreateSettlementModalComponent>
+        </CascadingValue>
     }
 
     @if (ShowUpdateSettlementModal)
     {
-        <div class="modal" tabindex="-1">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title">Modal title</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <div class="modal-body">
-                <p>Modal body text goes here.</p>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-              </div>
-            </div>
-          </div>
-        </div>
+         <CascadingValue Value="this">
+                 <UpdateSettlementModalComponent @bind-ShowCreateSettlementModal="@ShowUpdateSettlementModal" @SelectedSettlement="SelectedSettlement"></UpdateSettlementModalComponent>
+        </CascadingValue>
     }
 
     @if (ShowDeleteSettlementModal)
@@ -180,6 +148,8 @@ else{
 
         PagedSettlements = response.Query.Settlements;
         TotalItems = response.Query.TotalItems;
+
+        StateHasChanged();
     }
 
     #region Paging Methods
@@ -209,7 +179,7 @@ else{
     {
         var maxPage = TotalItems / PageSize + 1;
 
-        if(PageNumber >= 1 && PageNumber < maxPage)
+        if(pageNumber >= 1 && pageNumber <= maxPage)
         {
             PageNumber = pageNumber;
             UpdateNearPageList();
@@ -219,30 +189,20 @@ else{
 
     private void UpdateNearPageList()
     {
-        NearPages = new List<int>() { PageNumber - 1, PageNumber, PageNumber + 1 };
+        var maxPage = TotalItems / PageSize + 1;
+        if(PageNumber > 1 && PageNumber < maxPage)
+        {
+            NearPages = new List<int>() { PageNumber - 1, PageNumber, PageNumber + 1 };
+        }
     }
 
     #endregion
 
-    #region Action Methods
+    #region Action Methods - Modal
 
     private void CreateSettlementModal()
     {
         ShowCreateSettlementModal = true;
-    }
-
-    private async Task CreateSettlement()
-    {
-        await _settlementService.CreateSettlementAsync(
-        new CreateSettlementRequest
-            {
-                Settlement = new CreateSettlementView
-                {
-                    Name = SelectedSettlement.Name,
-                    PostalCode = SelectedSettlement.PostalCode,
-                    CountryId = SelectedSettlement.Country.Id,
-                }
-            });
     }
 
     private void UpdateSettlementModal(SettlementView settlement)
@@ -251,32 +211,11 @@ else{
         ShowUpdateSettlementModal = true;
     }
 
-    private async Task UpdateSettlement()
-    {
-        await _settlementService.UpdateSettlementAsync(
-        new UpdateSettlementRequest
-            {
-                Settlement = new UpdateSettlementView
-                {
-                    Id = SelectedSettlement.Id,
-                    Name = SelectedSettlement.Name,
-                    PostalCode = SelectedSettlement.PostalCode,
-                    CountryId = SelectedSettlement.Country.Id,
-                }
-            });
-    }
-
     private void DeleteSettlementModal(SettlementView settlement)
     {
         SelectedSettlement = settlement;
         ShowDeleteSettlementModal = true;
     }
-
-    private async Task DeleteSettlement()
-    {
-        throw new NotImplementedException();
-        await Task.FromResult(true);
-    }
-
+    
     #endregion
 }
