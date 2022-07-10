@@ -11,14 +11,14 @@ namespace SettlementManager.Service
 
 		#region Fiels
 
-		private readonly ISettlementReposiotry _settlementRepository;
+		private readonly ISettlementRepository _settlementRepository;
 		private readonly ISettlementFactory _factory;
 
 		#endregion
 
 		#region Constructors
 
-		public SettlementService(ISettlementReposiotry settlementRepository, ISettlementFactory factory)
+		public SettlementService(ISettlementRepository settlementRepository, ISettlementFactory factory)
 		{
 			_settlementRepository = settlementRepository;
 			_factory = factory;

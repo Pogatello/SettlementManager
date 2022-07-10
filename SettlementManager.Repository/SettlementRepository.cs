@@ -1,8 +1,9 @@
-﻿using SettlementManager.Model;
+﻿using Microsoft.EntityFrameworkCore;
+using SettlementManager.Model;
 
 namespace SettlementManager.Repository
 {
-	public class SettlementRepository : ISettlementReposiotry
+	public class SettlementRepository : ISettlementRepository
 	{
 		#region Fields
 
@@ -21,19 +22,27 @@ namespace SettlementManager.Repository
 
 		#region ISettlementReposiotry
 
-		public Task<Tuple<IEnumerable<Settlement>, int>> GetSettlementsQueryAsync(SettlementQuery query)
+		public async Task<Tuple<IEnumerable<Settlement>, int>> GetSettlementsQueryAsync(SettlementQuery query)
 		{
-			throw new NotImplementedException();
+			var totalItems = await _context.Settlements.CountAsync();
+			var settlements = await _context.Settlements
+											.Skip((query.PageNumber-1) * query.PageSize)
+											.Take(query.PageSize)
+											.ToListAsync();
+
+			return new Tuple<IEnumerable<Settlement>, int>(settlements, totalItems);
 		}
 
-		public Task CreateSettlementAsync(Settlement settlement)
+		public async Task CreateSettlementAsync(Settlement settlement)
 		{
-			throw new NotImplementedException();
+			_context.Settlements.Add(settlement);
+			await _context.SaveChangesAsync();
 		}
 
-		public Task UpdateSettlementAsync(Settlement settlement)
+		public async Task UpdateSettlementAsync(Settlement settlement)
 		{
-			throw new NotImplementedException();
+			_context.Settlements.Update(settlement);
+			await _context.SaveChangesAsync();
 		}
 
 		#endregion

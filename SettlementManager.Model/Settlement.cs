@@ -1,4 +1,5 @@
 ﻿using SettlementManager.Model.Common;
+using System.ComponentModel.DataAnnotations;
 
 namespace SettlementManager.Model
 {

@@ -1,6 +1,6 @@
 ﻿namespace SettlementManager.Model
 {
-	public interface ISettlementReposiotry
+	public interface ISettlementRepository
 	{
 		Task<Tuple<IEnumerable<Settlement>, int>> GetSettlementsQueryAsync(SettlementQuery query);
 
