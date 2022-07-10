@@ -1,5 +1,5 @@
 This is an app for managing settlements that are connected to countries.
-App contains .NET 6 REST API, and a Blazor Server App as frontend componet. 
+App contains .NET 6 REST API, and a Blazor Server App as frontend component. 
 Implemented methods are SettlementQuery with paging, Create, Update and Delete.
 
 
@@ -14,7 +14,7 @@ Open soulution in Visual Studio or some other IDE
 
 Adjust connection string if neccessary - both in SettlementManager.Web (for blazor frontend) and SettlementManager.API (for rest api)
 
-Open Package Manager Console, targer project SettlementManager.Repository and execute Update-Database command
+Open Package Manager Console, target project SettlementManager.Repository and execute Update-Database command
 
 Database tables should be created.
 
@@ -43,6 +43,6 @@ Features
 - Paging (prev, next, page number)
 - Action buttons for Update and delete in the last column
   - Actions open a modal with an update form or delete confirmation
-- Top rigght corner of table - Create button
+- Top right corner of table - Create button
    - Opens a modal for creating a settlement
 - Bottom left corner of a table - total settlements in a database
