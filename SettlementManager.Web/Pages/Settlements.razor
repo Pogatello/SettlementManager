@@ -14,24 +14,32 @@
    </div>
 }
 else{
-    <nav>
-      <ul class="pagination">
-        <li class="page-item">
-          <a class="page-link"  @onclick="DecrementPage" aria-label="Previous">
-            <span aria-hidden="true">&laquo;</span>
-          </a>
-        </li>
-        @foreach(var pg in NearPages)
-        {
-            <li class="page-item"><a class="page-link" @onclick="() => SelectPage(pg)">@pg</a></li>
-        }
-        <li class="page-item">
-          <a class="page-link" @onclick="IncrementPage" aria-label="Next">
-            <span aria-hidden="true">&raquo;</span>
-          </a>
-        </li>
-      </ul>
-    </nav>
+        <div class="d-flex justify-content-between">
+      <div>
+          <nav>
+          <ul class="pagination">
+            <li class="page-item">
+              <a class="page-link"  @onclick="DecrementPage" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+              </a>
+            </li>
+            @foreach(var pg in NearPages)
+            {
+                <li class="page-item"><a class="page-link" @onclick="() => SelectPage(pg)">@pg</a></li>
+            }
+            <li class="page-item">
+              <a class="page-link" @onclick="IncrementPage" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+      <div>
+           <button class="btn" @onclick="CreateSettlementModal"><i class="fa-solid fa-square-plus"></i></button>
+      </div>
+   </div>
+
     <table class="table table-striped table-hover">
         <thead>
             <tr>
@@ -51,18 +59,14 @@ else{
                   <td>@settlement.PostalCode</td>
                   <td>@settlement.Country?.Name</td>
                   <td>
-                      <button class="btn" @onclick="CreateSettlementModal"><i class="fa-solid fa-square-plus"></i></button>
                       <button class="btn" @onclick="() => UpdateSettlementModal(settlement)"><i class="fa-solid fa-pencil"></i></button>
                       <button class="btn" @onclick="() => DeleteSettlementModal(settlement)"><i class="fa-solid fa-trash-can"></i></button>
-                      @*<button class="btn" @onclick="CreateSettlement"><i class="fa-solid fa-square-plus"></i></button>
-                      <button class="btn" @onclick="() => UpdateSettlement(settlement)"><i class="fa-solid fa-pencil"></i></button>
-                      <button class="btn" @onclick="() => DeleteSettlement(settlement)"><i class="fa-solid fa-trash-can"></i></button>*@
                   </td>
                </tr> 
             }
         </tbody>
     </table>
-
+    <p>TotalItems: @TotalItems</p>
 
     @if (ShowErrorModal)
     {
@@ -71,6 +75,11 @@ else{
 
     @if (ShowCreateSettlementModal)
     {
+        	   @* <CascadingValue Value="this">
+            <CascadingValue Value="@ShowCreateSettlementModal">
+                 <CreateSettlementModalComponent></CreateSettlementModalComponent>
+            </CascadingValue>
+        </CascadingValue>*@
         <div class="modal" tabindex="-1">
           <div class="modal-dialog">
             <div class="modal-content">
@@ -198,9 +207,14 @@ else{
 
     private async Task SelectPage(int pageNumber)
     {
-        PageNumber = pageNumber;
-        UpdateNearPageList();
-        await InitializeSettlements();
+        var maxPage = TotalItems / PageSize + 1;
+
+        if(PageNumber >= 1 && PageNumber < maxPage)
+        {
+            PageNumber = pageNumber;
+            UpdateNearPageList();
+            await InitializeSettlements();
+        }
     }
 
     private void UpdateNearPageList()
