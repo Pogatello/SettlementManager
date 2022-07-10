@@ -50,7 +50,13 @@ namespace SettlementManager.Service
 
 		public async Task<UpdateSettlementResponse> UpdateSettlementAsync(UpdateSettlementRequest request)
 		{
-			var settlement = _factory.MapToSettlement(request.Settlement);
+			var settlement = await _settlementRepository.GetSettlementAsync(request.Settlement.Id);
+			if (settlement == null)
+			{
+				throw new ResourceNotFoundException();
+			}
+
+			_factory.MapToSettlement(settlement, request);
 			settlement.ValidateForUpdate();
 
 			await _settlementRepository.UpdateSettlementAsync(settlement);

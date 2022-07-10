@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using SettlementManager.Messaging.Request;
 using SettlementManager.Messaging.Response;
 using SettlementManager.Messaging.View;
 using SettlementManager.Model;
@@ -47,9 +48,11 @@ namespace SettlementManager.Service.Factoreies
 			return _mapper.Map<Settlement>(view);	
 		}
 
-		public Settlement MapToSettlement(UpdateSettlementView view)
+		public void MapToSettlement(Settlement settlement, UpdateSettlementRequest request)
 		{
-			return _mapper.Map<Settlement>(view);
+			settlement.SetName(request.Settlement.Name);
+			settlement.SetPostalCode(request.Settlement.PostalCode);
+			settlement.SetCountryId(request.Settlement.CountryId);
 		}
 
 		public CreateSettlementResponse GenerateCreateSettlementResponse()

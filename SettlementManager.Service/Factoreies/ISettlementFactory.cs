@@ -1,4 +1,5 @@
-﻿using SettlementManager.Messaging.Response;
+﻿using SettlementManager.Messaging.Request;
+using SettlementManager.Messaging.Response;
 using SettlementManager.Messaging.View;
 using SettlementManager.Model;
 
@@ -12,7 +13,7 @@ namespace SettlementManager.Service.Factoreies
 
 		Settlement MapToSettlement(CreateSettlementView view);
 
-		Settlement MapToSettlement(UpdateSettlementView view);
+		void MapToSettlement(Settlement settlement, UpdateSettlementRequest request);
 
 		CreateSettlementResponse GenerateCreateSettlementResponse();
 

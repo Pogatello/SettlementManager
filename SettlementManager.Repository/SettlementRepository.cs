@@ -54,7 +54,9 @@ namespace SettlementManager.Repository
 
 		public async Task<Settlement> GetSettlementAsync(long id)
 		{
-			return await _context.Settlements.SingleOrDefaultAsync(x => x.Id == id);
+			return await _context.Settlements
+								 .Include(x=>x.Country)
+								 .SingleOrDefaultAsync(x => x.Id == id);
 		}
 
 		#endregion

@@ -1,4 +1,4 @@
-using SettlementManager.API;
+using SettlementManager.Web;
 
 var builder = WebApplication.CreateBuilder(args);
 DiContainer.Configure(builder);	

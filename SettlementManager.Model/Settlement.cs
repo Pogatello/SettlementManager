@@ -58,9 +58,20 @@ namespace SettlementManager.Model
 			ValidateForCreate();
 		}
 
-		public void SetCountry(Country country)
+		public void SetName(string name)
 		{
-			Country = country;
+			Name = name;
+		}
+
+		public void SetPostalCode(string postalCode)
+		{
+			PostalCode = postalCode;
+		}
+
+		public void SetCountryId(long id)
+		{
+			Country = null;
+			CountryId = id;
 		}
 
 		#endregion
