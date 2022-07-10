@@ -1,0 +1,60 @@
+﻿@using SettlementManager.Contract
+@using SettlementManager.Messaging.Request
+@using SettlementManager.Messaging.View
+@using SettlementManager.Model
+@using SettlementManager.Web.Pages
+
+@inject ISettlementService _settlementService;
+
+<div class="modal fade show d-block" id="exampleModal" tabindex="-1" role="dialog">  
+    <div class="modal-dialog" role="document">  
+        <div class="modal-content">  
+            <div class="modal-header">  
+                <h5 class="modal-title" id="titleLabel">Delete Settlement</h5>  
+                <button type="button" class="close"  data-dismiss="modal" @onclick="Close" aria-label="Close">  
+                    <span aria-hidden="true">×</span>  
+                </button>  
+            </div>  
+            <div class="modal-body">  
+                <h4>Are you sure you want to delete this settlement?</h4>
+                <p>@SelectedSettlement.Name (@SelectedSettlement.PostalCode) - @SelectedSettlement.Country.Name</p>
+                <br>                   
+                <button @onclick="DeleteSettlementAsync" class="btn btn-primary">Delete Settlement</button>  
+                <a class="btn btn-outline-primary" @onclick="@Close">Close</a>  
+            </div>  
+        </div>  
+    </div>  
+</div>  
+
+@code {
+    [CascadingParameter]
+    private Settlements _Parent { get; set; }
+
+    [Parameter]
+    public bool ShowDeleteSettlementModal { get; set; }
+    [Parameter]
+    public EventCallback<bool> ShowDeleteSettlementModalChanged { get; set; }
+
+    [Parameter]
+    public SettlementView SelectedSettlement { get; set; }
+
+    private async Task DeleteSettlementAsync()
+    {
+        await _settlementService.DeleteSettlementAsync(
+            new DeleteSettlementRequest
+                {
+                    SettlementId = SelectedSettlement.Id
+                }
+        );
+
+        ShowDeleteSettlementModal = false;
+        await ShowDeleteSettlementModalChanged.InvokeAsync(ShowDeleteSettlementModal);
+        await _Parent.InitializeSettlements();
+    }
+
+    private Task Close()
+    {
+        ShowDeleteSettlementModal = false;
+        return ShowDeleteSettlementModalChanged.InvokeAsync(ShowDeleteSettlementModal);
+    }
+}

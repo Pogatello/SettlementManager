@@ -1,13 +1,11 @@
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
-using SettlementManager.Web.Data;
+using SettlementManager.Web;
 
 var builder = WebApplication.CreateBuilder(args);
+DiContainer.Configure(builder);	
 
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
-builder.Services.AddSingleton<WeatherForecastService>();
 
 var app = builder.Build();
 
