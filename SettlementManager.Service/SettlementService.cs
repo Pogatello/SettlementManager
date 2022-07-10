@@ -1,4 +1,5 @@
 ﻿using SettlementManager.Contract;
+using SettlementManager.Infrastructure.Exceptions;
 using SettlementManager.Messaging.Request;
 using SettlementManager.Messaging.Response;
 using SettlementManager.Model;
@@ -55,6 +56,20 @@ namespace SettlementManager.Service
 			await _settlementRepository.UpdateSettlementAsync(settlement);
 
 			return _factory.GenerateUpdateSettlementResponse();
+		}
+
+		public async Task<DeleteSettlementResponse> DeleteSettlementAsync(DeleteSettlementRequest request)
+		{
+			var settlement = await _settlementRepository.GetSettlementAsync(request.SettlementId);
+
+			if(settlement == null)
+			{
+				throw new ResourceNotFoundException();
+			}
+
+			await _settlementRepository.DeleteSettlementAsync(settlement);
+
+			return _factory.GenerateDeleteSettlementResponse();
 		}
 
 		#endregion

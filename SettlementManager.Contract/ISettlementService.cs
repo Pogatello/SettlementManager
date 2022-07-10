@@ -11,5 +11,7 @@ namespace SettlementManager.Contract
 		Task<CreateSettlementResponse> CreateSettlementAsync(CreateSettlementRequest request);
 
 		Task<UpdateSettlementResponse> UpdateSettlementAsync(UpdateSettlementRequest request);
+
+		Task<DeleteSettlementResponse> DeleteSettlementAsync(DeleteSettlementRequest request);
 	}
 }

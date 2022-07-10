@@ -68,6 +68,19 @@ namespace SettlementManager.API.Controllers
 			return Ok();
 		}
 
+		[HttpDelete("DeleteSettlement/{settlementId}")]
+		public async Task<IActionResult> DeleteSettlementAsync([FromRoute]long settlementId)
+		{
+			await _settlementService.DeleteSettlementAsync(
+				new DeleteSettlementRequest
+				{
+					SettlementId = settlementId
+				}
+			);
+
+			return Ok();
+		}
+
 		#endregion
 	}
 }

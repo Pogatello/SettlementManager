@@ -46,6 +46,17 @@ namespace SettlementManager.Repository
 			await _context.SaveChangesAsync();
 		}
 
+		public async Task DeleteSettlementAsync(Settlement settlement)
+		{
+			_context.Settlements.Remove(settlement);
+			await _context.SaveChangesAsync();
+		}
+
+		public async Task<Settlement> GetSettlementAsync(long id)
+		{
+			return await _context.Settlements.SingleOrDefaultAsync(x => x.Id == id);
+		}
+
 		#endregion
 	}
 }

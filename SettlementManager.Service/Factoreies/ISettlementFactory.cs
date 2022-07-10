@@ -17,5 +17,7 @@ namespace SettlementManager.Service.Factoreies
 		CreateSettlementResponse GenerateCreateSettlementResponse();
 
 		UpdateSettlementResponse GenerateUpdateSettlementResponse();
+
+		DeleteSettlementResponse GenerateDeleteSettlementResponse();
 	}
 }

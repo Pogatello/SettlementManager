@@ -7,5 +7,9 @@
 		Task CreateSettlementAsync(Settlement settlement);
 
 		Task UpdateSettlementAsync(Settlement settlement);
+
+		Task DeleteSettlementAsync(Settlement settlement);
+
+		Task<Settlement> GetSettlementAsync(long id);
 	}
 }

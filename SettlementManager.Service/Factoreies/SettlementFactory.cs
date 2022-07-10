@@ -68,6 +68,14 @@ namespace SettlementManager.Service.Factoreies
 			};
 		}
 
+		public DeleteSettlementResponse GenerateDeleteSettlementResponse()
+		{
+			return new DeleteSettlementResponse
+			{
+				Success = true
+			};
+		}
+
 		#endregion
 	}
 }
