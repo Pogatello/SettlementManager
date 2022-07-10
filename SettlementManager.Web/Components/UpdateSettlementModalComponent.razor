@@ -72,7 +72,7 @@
     [Parameter]
     public SettlementView SelectedSettlement { get; set; }
 
-    private UpdateSettlementView UpdateSettlement { get; set; } = new UpdateSettlementView();
+    private UpdateSettlementView UpdateSettlement { get; set; }
     private IEnumerable<CountryView> Countries { get; set; }
 
     private bool Loading { get; set; } = true;

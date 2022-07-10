@@ -1,5 +1,4 @@
 using SettlementManager.API;
-using SettlementManager.Web.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 DiContainer.Configure(builder);	
@@ -7,7 +6,6 @@ DiContainer.Configure(builder);
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
-builder.Services.AddSingleton<WeatherForecastService>();
 
 var app = builder.Build();
 
