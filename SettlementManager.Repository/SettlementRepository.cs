@@ -21,7 +21,7 @@ namespace SettlementManager.Repository
 
 		#region ISettlementReposiotry
 
-		public Task<IEnumerable<Settlement>> GetSettlementsQueryAsync(SettlementQuery query)
+		public Task<Tuple<IEnumerable<Settlement>, int>> GetSettlementsQueryAsync(SettlementQuery query)
 		{
 			throw new NotImplementedException();
 		}

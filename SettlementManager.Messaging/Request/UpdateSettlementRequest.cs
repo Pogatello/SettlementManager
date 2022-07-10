@@ -5,6 +5,6 @@ namespace SettlementManager.Messaging.Request
 {
 	public class UpdateSettlementRequest : RequestBase
 	{
-		public UpdateSettlementView View { get; set; }
+		public UpdateSettlementView Settlement { get; set; }
 	}
 }

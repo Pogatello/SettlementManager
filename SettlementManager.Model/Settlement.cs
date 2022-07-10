@@ -21,5 +21,43 @@ namespace SettlementManager.Model
 		public Country Country { get; private set; }
 
 		#endregion
+
+		#region Public Methods
+
+
+		public void ValidateForCreate()
+		{
+			//Messages should be in separate class ex. SettlementBrokenRules
+
+			if (string.IsNullOrWhiteSpace(Name))
+			{
+				AddBrokenRule("Name is required.");
+			}
+
+			if (string.IsNullOrWhiteSpace(PostalCode))
+			{
+				AddBrokenRule("Postal code is required.");
+			}
+
+			if (CountryId == default)
+			{
+				AddBrokenRule("Country is required");
+			}
+
+			ThrowExceptionIfThereAreBrokenRules();
+		}
+
+		public void ValidateForUpdate()
+		{
+			//Messages should be in separate class ex. SettlementBrokenRules
+			if (Id == default)
+			{
+				AddBrokenRule("Id is required for update.");
+			}
+
+			ValidateForCreate();
+		}
+
+		#endregion
 	}
 }

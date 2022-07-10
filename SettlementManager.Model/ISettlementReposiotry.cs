@@ -2,7 +2,7 @@
 {
 	public interface ISettlementReposiotry
 	{
-		Task<IEnumerable<Settlement>> GetSettlementsQueryAsync(SettlementQuery query);
+		Task<Tuple<IEnumerable<Settlement>, int>> GetSettlementsQueryAsync(SettlementQuery query);
 
 		Task CreateSettlementAsync(Settlement settlement);
 

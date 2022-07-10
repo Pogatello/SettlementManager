@@ -5,6 +5,6 @@ namespace SettlementManager.Messaging.Response
 {
 	public class GetSettlementQueryResponse : ResponseBase
 	{
-		public GetSettlementQueryResponseView Settlements { get; set; }
+		public GetSettlementQueryResponseView Query { get; set; }
 	}
 }

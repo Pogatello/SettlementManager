@@ -14,6 +14,14 @@ namespace SettlementManager.Service.Factoreies
 
 		#endregion
 
+		#region Consturctors
+
+		public CountryFactory(IMapper mapper)
+		{
+			_mapper = mapper;
+		}
+
+		#endregion
 
 		#region ICountryFactory
 
