@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SettlementManager.API\SettlementManager.API.csproj" />
+    <ProjectReference Include="..\SettlementManager.Razor.Shared\SettlementManager.Razor.Shared.csproj" />
   </ItemGroup>
 
 </Project>
