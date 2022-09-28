@@ -24,9 +24,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SettlementManager.Razor.Shared", "SettlementManager.Razor.Shared\SettlementManager.Razor.Shared.csproj", "{5D6520BE-BF7F-4A80-89F0-82A29DDB08EE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SettlementManager.Razor.Shared", "SettlementManager.Razor.Shared\SettlementManager.Razor.Shared.csproj", "{5D6520BE-BF7F-4A80-89F0-82A29DDB08EE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SettlementManager.Maui", "SettlementManager.Maui\SettlementManager.Maui.csproj", "{ED5919A3-FE78-4626-A42A-7F173483D273}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SettlementManager.Maui", "SettlementManager.Maui\SettlementManager.Maui.csproj", "{ED5919A3-FE78-4626-A42A-7F173483D273}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

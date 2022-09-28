@@ -3,6 +3,7 @@
 @using SettlementManager.Messaging.View
 @using SettlementManager.Model
 @using SettlementManager.Razor.Shared.Pages
+@using Blazored.Typeahead;
 
 @inject ISettlementService _settlementService;
 @inject ICountryService _countryService;
@@ -40,7 +41,7 @@
                         <ValidationMessage For="@(() => UpdateSettlement.PostalCode)" />  
                     </div> 
                     <br />
-                    <div class="form-group">  
+                @*    <div class="form-group">  
                         <label for="psotalCode">Country: </label>  
                         <InputSelect @bind-Value=@UpdateSettlement.CountryId>
                             @foreach (var display in Countries)
@@ -49,6 +50,27 @@
                             }
                         </InputSelect> 
                         <ValidationMessage For="@(() => UpdateSettlement.CountryId)" />  
+                    </div>*@
+                     <div class="form-group">
+                        <label for="country">Country: </label>
+                              <BlazoredTypeahead
+                        SearchMethod="SearchCountries"
+                        ConvertMethod="ConvertCountry"
+                        MinimumLength="2"
+                        @bind-Value="@UpdateSettlement.CountryId"
+                        placeholder="Search by country name..."
+                        >
+                        <SelectedTemplate Context="countryId">
+                        @{
+                        var selectedCountry = LoadSelectedCountry(countryId);
+
+                        <text>@selectedCountry?.Name</text>
+                        }
+                        </SelectedTemplate>
+                        <ResultTemplate Context="country">
+                        @country.Name
+                        </ResultTemplate>
+                        </BlazoredTypeahead>
                     </div>
                     <br>                   
                     <button type="submit" class="btn btn-primary">Update Settlement</button>  
@@ -107,6 +129,20 @@
         await ShowUpdateSettlementModalChanged.InvokeAsync(ShowUpdateSettlementModal);
         await _Parent.InitializeSettlements();
     }
+
+    public async Task<IEnumerable<CountryView>> SearchCountries(string searchText)
+    {
+        var response = await _countryService.GetCountryQueryAsync(new GetCountryQueryRequest() { SearchTerm = searchText });
+        Countries = response.Countries;
+
+        return response.Countries;
+    }
+
+    public static long ConvertCountry(CountryView? c)
+       => c?.Id ?? default;
+
+    public CountryView? LoadSelectedCountry(long id)
+      => Countries.FirstOrDefault(c => c.Id == id);
 
     private Task Close()
     {

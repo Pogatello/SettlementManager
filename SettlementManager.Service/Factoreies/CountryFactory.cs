@@ -34,6 +34,15 @@ namespace SettlementManager.Service.Factoreies
 			};
 		}
 
+		public GetCountryQueryResponse GenerateGetCountryQueryResponse(IEnumerable<Country> countries)
+		{
+            return new GetCountryQueryResponse
+            {
+                Success = true,
+                Countries = _mapper.Map<IEnumerable<CountryView>>(countries)
+            };
+        }
+
 		#endregion
 	}
 }

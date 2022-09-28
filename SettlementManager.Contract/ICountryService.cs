@@ -6,5 +6,7 @@ namespace SettlementManager.Contract
 	public interface ICountryService
 	{
 		Task<GetCountriesResponse> GetCountriesAsync(GetCountriesRequest request);
-	}
+
+        Task<GetCountryQueryResponse> GetCountryQueryAsync(GetCountryQueryRequest request);
+    }
 }

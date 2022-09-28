@@ -27,6 +27,11 @@ namespace SettlementManager.Repository
 			return await _context.Countries.ToListAsync();
 		}
 
-		#endregion
-	}
+		public async Task<IEnumerable<Country>> GetCountryQueryAsync(CountryQuery query)
+		{
+            return await _context.Countries.Where(x => x.Name.ToLower().StartsWith(query.SearchTerm.ToLower())).ToListAsync();
+        }
+
+        #endregion
+    }
 }

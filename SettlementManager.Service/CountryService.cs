@@ -33,6 +33,16 @@ namespace SettlementManager.Service
 			return _factory.GenerateGetCountriesResponse(countries);
 		}
 
-		#endregion
-	}
+		public async Task<GetCountryQueryResponse> GetCountryQueryAsync(GetCountryQueryRequest request)
+		{
+			var query = new CountryQuery(request.SearchTerm);
+			query.Validate();
+
+            var countries = await _countryRepository.GetCountryQueryAsync(query);
+
+            return _factory.GenerateGetCountryQueryResponse(countries);
+        }
+
+        #endregion
+    }
 }
