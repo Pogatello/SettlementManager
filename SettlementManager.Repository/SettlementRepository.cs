@@ -26,8 +26,8 @@ namespace SettlementManager.Repository
 		{
 			var totalItems = await _context.Settlements.CountAsync();
 			var settlements = await _context.Settlements
-											.Include(x=>x.Country)
-											.Skip((query.PageNumber-1) * query.PageSize)
+											.Include(x => x.Country)
+											.Skip((query.PageNumber - 1) * query.PageSize)
 											.Take(query.PageSize)
 											.ToListAsync();
 
